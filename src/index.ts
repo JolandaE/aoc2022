@@ -1,12 +1,12 @@
 import { getFileReader } from "./helpers/filehelpers";
 
 // npx tsc -w
-const reader = getFileReader('src/helpers/test.txt');
+const reader = getFileReader('input/day01_1.txt');
 
 reader.on('line', (line) => {
     // do stuff per line here
 })
 
 reader.on('close', () => {
-    // do clean up stuff here
+   // do stuff on close here
 })
