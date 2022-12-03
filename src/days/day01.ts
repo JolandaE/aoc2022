@@ -1,27 +1,29 @@
 import { getFileReader } from "../helpers/filehelpers";
 
-// npx tsc -w
-const reader = getFileReader('../input/day01_1.txt');
 
-let currentCalories = 0;
-let elfCalories: number[] = [];
+export function AoCDayOne() {
+    const reader = getFileReader('input/day01_1.txt');
 
-reader.on('line', (line) => {
-    if(line.length === 0) {
-       elfCalories.push(currentCalories);
-       currentCalories = 0;
-    } else {
-        currentCalories += parseInt(line);
-    }
-})
+    let currentCalories = 0;
+    let elfCalories: number[] = [];
 
-reader.on('close', () => {
-    // Take care of the final calories if they haven't been added yet.
-    if (currentCalories !== 0) {
+    reader.on('line', (line) => {
+        if(line.length === 0) {
         elfCalories.push(currentCalories);
-    }
+        currentCalories = 0;
+        } else {
+            currentCalories += parseInt(line);
+        }
+    })
 
-    elfCalories.sort((a, b) => b - a);
-    console.log('Max calories are: ', elfCalories[0]);
-    console.log('Top three calories are: ', elfCalories[0]+elfCalories[1]+elfCalories[2]);
-})
+    reader.on('close', () => {
+        // Take care of the final calories if they haven't been added yet.
+        if (currentCalories !== 0) {
+            elfCalories.push(currentCalories);
+        }
+
+        elfCalories.sort((a, b) => b - a);
+        console.log(`[DAY 1, PART 1] Max calories: ${elfCalories[0]}`);
+        console.log(`[DAY 1, PART 2] Top three calories: ${elfCalories[0]+elfCalories[1]+elfCalories[2]}\n`);
+    });
+}
