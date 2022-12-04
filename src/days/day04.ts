@@ -5,15 +5,15 @@ const reader = getFileReader('input/day04_1.txt');
 const START = 0;
 const END = 1;
 
-function totalOverlap(left: number[], right: number[]): boolean {
-    return ((left[START] <= right[START] && right[END] <= left[END]) ||
-            (right[START] <= left[START] && left[END] <= right[END])) 
+function hasTotalOverlap(first: number[], second: number[]): boolean {
+    return ((first[START] <= second[START] && second[END] <= first[END]) ||
+            (second[START] <= first[START] && first[END] <= second[END])) 
 }
 
-function partialOverlap(left: number[], right: number[]): boolean {
+function hasPartialOverlap(first: number[], second: number[]): boolean {
     // the end of one pair should be equal or higher than either number in the other pair.
-    return ((right[START] <=  left[END] &&  left[END] <= right[END]) || 
-            ( left[START] <= right[END] && right[END] <=  left[END]))
+    return ((second[START] <=  first[END] &&  first[END] <= second[END]) || 
+            ( first[START] <= second[END] && second[END] <=  first[END]))
 }
 
 
@@ -22,13 +22,13 @@ export function AoCDayFour() {
     let partialOverlapPairs = 0;
 
     reader.on('line', (line: string) => {
-        const bounds: number[] = line.split(/[-,]+/).filter(a => parseInt(a)).map(a => parseInt(a));
+        const ranges: number[] = line.split(/[-,]+/).filter(a => parseInt(a)).map(a => parseInt(a));
     
-        if (totalOverlap(bounds.slice(0,2), bounds.slice(2))) {
+        if (hasTotalOverlap(ranges.slice(0,2), ranges.slice(2))) {
             totalOverlapPairs += 1;
         }
     
-        if (partialOverlap(bounds.slice(0,2), bounds.slice(2))) {
+        if (hasPartialOverlap(ranges.slice(0,2), ranges.slice(2))) {
             partialOverlapPairs += 1;
         }
     })
